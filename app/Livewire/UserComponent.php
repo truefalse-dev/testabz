@@ -81,6 +81,10 @@ class UserComponent extends Component
                 'position_id' => $this->position_id,
             ]);
 
+        if ($response->created()) {
+            $this->reset('name', 'email', 'phone', 'position_id', 'photo');
+        }
+
         $collection = json_decode($response, false, 512, JSON_THROW_ON_ERROR);
 
         if (isset($collection->errors->name)) {

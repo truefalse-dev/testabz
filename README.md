@@ -10,4 +10,5 @@ php artisan storage:link<br/>
 ### Seed
 php artisan db:seed<br/>
 
+#### Before use you should controll APP_URL
 ### Enjoy!
