@@ -14,12 +14,14 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->string('phone');
+            $table->unsignedBigInteger('position_id');
             $table->string('photo')->nullable();
 
-            $table->foreignIdFor(UserPosition::class, 'position_id')
-                ->constrained('user_positions')
-                ->restrictOnDelete()
-                ->cascadeOnUpdate();
+            // $table->foreign('position_id')
+            //     ->references('id')
+            //     ->on('users')
+            //     ->onUpdate('cascade')
+            //     ->onDelete('restrict');
         });
     }
 
