@@ -22,8 +22,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::query()->truncate();
-        UserPosition::query()->truncate();
+        User::query()->where('id', '>', 0)->delete();
+        UserPosition::query()->where('id', '>', 0)->delete();
 
         UserPosition::factory(4)->sequence(fn ($sequence) => [
             'name' => $this->positions[$sequence->index]

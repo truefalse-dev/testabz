@@ -17,11 +17,11 @@ return new class extends Migration
             $table->unsignedBigInteger('position_id');
             $table->string('photo')->nullable();
 
-            // $table->foreign('position_id')
-            //     ->references('id')
-            //     ->on('users')
-            //     ->onUpdate('cascade')
-            //     ->onDelete('restrict');
+            $table->foreign('position_id')
+                ->references('id')
+                ->on('user_positions')
+                ->onUpdate('cascade')
+                ->onDelete('restrict');
         });
     }
 
