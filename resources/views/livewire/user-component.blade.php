@@ -24,8 +24,8 @@
                     <div class="form-group mb-3">
                         <label for="position">Position:</label>
                         <select id="position" class="form-control" wire:model="position_id">
-                            @foreach($positions as $position_id => $name)
-                                <option value="{{ $position_id }}">{{ $name }}</option>
+                            @foreach($positions as $position)
+                                <option value="{{ $position->id }}">{{ $position->name }}</option>
                             @endforeach
                         </select>
                         @error('position_id') <span class="error text-danger">{{ $message }}</span> @enderror

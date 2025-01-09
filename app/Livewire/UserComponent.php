@@ -25,18 +25,30 @@ class UserComponent extends Component
     public int $page = 1;
     public bool $hasMore = true;
     public array $users = [];
-    public Collection $positions;
+    public array $positions = [];
 
     /**
      * @throws \JsonException
      */
     public function mount(): void
     {
-        $this->positions = UserPosition::query()->pluck('name', 'id');
-        $this->users = $this->getList();
+        $this->users = $this->getUserList();
+        $this->positions = $this->getPositionList();
     }
 
-    private function getList(): array
+    private function getPositionList(): array
+    {
+        $url = env('APP_URL') . '/api/v1/positions';
+
+        $client = Http::withUserAgent('livewire-agent');
+
+        $response = $client->get($url);
+        $collection = json_decode($response, false, 512, JSON_THROW_ON_ERROR);
+
+        return collect($collection->positions)->all();
+    }
+
+    private function getUserList(): array
     {
         $this->placeholder = env('APP_URL') . '/placeholder.png';
 
@@ -57,7 +69,7 @@ class UserComponent extends Component
     public function showMore(): void
     {
         ++$this->page;
-        $this->users = array_merge($this->users, $this->getList());
+        $this->users = array_merge($this->users, $this->getUserList());
     }
 
     public function save()
@@ -108,7 +120,7 @@ class UserComponent extends Component
         }
 
         $this->page = 1;
-        $this->users = $this->getList();
+        $this->users = $this->getUserList();
     }
 
     /**
